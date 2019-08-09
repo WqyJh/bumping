@@ -44,12 +44,31 @@ def get_commit_increment(message: str) -> tuple:
     return get_increment(type)
 
 
+def add_version_tuple(v1, v2):
+    return (v1[0] + v2[0],
+            v1[1] + v2[1],
+            v1[2] + v2[2])
+
+
+def get_commit_increments(repo, latest_rev='HEAD'):
+    t = (0, 0, 0)
+    for commit in repo.iter_commits(latest_rev):
+        inc = get_commit_increment(commit.message)
+        if inc:
+            t = add_version_tuple(t, inc)
+    return t
+
+
+def parse_version(t: tuple) -> str:
+    return '%d.%d.%d' % t
+
+
 def main():
     args = docopt.docopt(__doc__, version=__version__)
     repo = Repo(os.path.abspath(args['--repo']))
 
-    for commit in repo.iter_commits('HEAD'):
-        print('%-10s%s' % (get_commit_increment(commit.message), commit.message))
+    incs = get_commit_increments(repo)
+    print(parse_version(incs))
 
 
 if __name__ == '__main__':
