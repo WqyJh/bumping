@@ -1,0 +1,22 @@
+language: python
+branches:
+  only:
+  - master
+  - dev
+  - "/^release-.*$/"
+python:
+- '3.6'
+install:
+- pip install pipenv
+- pipenv install --dev
+script:
+- python setup.py test
+deploy:
+  provider: pypi
+  user: wqy
+  on:
+    branch: master
+  distributions: sdist bdist_wheel
+  skip_existing: true
+  password:
+    secure: TAlcnQm/D+7OJCj4XRLbTUzLfI8e067ckGf8iZtfoGOro2BbEEm2HM+J6RZnbIJqTNrdsstdDShWeJ8TRgRXZD8V529908UYb5IIXstrN91BCeFts/GzYNWpV6poNNuITjTouXgeEeFd5CVEfQuyZgvLTdlo6UN6cyV0Jh9tCb7uk8lNBT4V9evTh0EuXOPDQL2qhR7m2KDbiQy6180CB2lNrdj55CutQ2zhtG9SOwZ98v3hr0XIGqLm5iM9BuaTmh5P8Pm1auZU1CxjNn7E4Hie3S3uTMlM2WjtPhTHWaSF9xZo1pfBXLStSqRjuncgYEIhkq08xuVSTQAkj95GYz2Y6u3zKYX7eTfp4C8kUNBO/o1BQDLY6WFbfxr52qMiacGizmDJ8E+6HljIacWiKYUHOhf3fTm2sWb3FNzkYSYkwVaIx/X2mcq4sC2HY1J66zT0C0RzFvaZiZV7btA5thU0zmCyFmTIxbe8PQpK8Rx0xY7TXManuSs0C9g1WxJz21FA8U2BBYoXrWJp0oXnd7yF0VoISrbZ9WMQ4coSUO/NeZXpdS9gazGhx8rJ0S0erXWJONFGCSKP0MNvFYCHWNsa1khGiaMocoNUhZdb88SB/HKwkDeoUMbz1tGtgMX8Snacoagz+k0uFXu+MTAy7VpFQq6y26R7pKMEEHrh1TY=
