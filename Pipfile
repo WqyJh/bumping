@@ -18,6 +18,7 @@ twine = "*"
 
 [packages]
 gitpython = "*"
+docopt = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,15 +1,32 @@
-import re
+'''
+Python tool to calculate SemVer based on conventional git commit messages.
 
-from git import Repo, Commit
+Usage: bumping [options]
+
+Options:
+    -r=REPO --repo=REPO     Path to the repository's root directory
+                            [Default: .]
+    -h --help               Print this help text
+    -v --version            Print the version number
+'''
+
+import os
+import re
+import docopt
+
+from git import Repo
+
+from bumping import __version__
+
 
 _prog = re.compile(r'^([^\(\)]+?)(\([^\(\)]+\))?: [\s\S]+$')
+
 
 _increment_map = {
     'BREAKING CHANGE': (1, 0, 0),
     'feat': (0, 1, 0),
     'fix': (0, 0, 1),
 }
-_increment_map.setdefault(None)
 
 
 def get_commit_type(message: str) -> str:
@@ -19,7 +36,7 @@ def get_commit_type(message: str) -> str:
 
 
 def get_increment(type: str) -> tuple:
-    return _increment_map[type]
+    return _increment_map.get(type, None)
 
 
 def get_commit_increment(message: str) -> tuple:
@@ -28,8 +45,9 @@ def get_commit_increment(message: str) -> tuple:
 
 
 def main():
-    repo = Repo('.')
-    
+    args = docopt.docopt(__doc__, version=__version__)
+    repo = Repo(os.path.abspath(args['--repo']))
+
     for commit in repo.iter_commits('HEAD'):
         print('%-10s%s' % (get_commit_increment(commit.message), commit.message))
 
