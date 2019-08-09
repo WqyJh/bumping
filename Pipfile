@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+rope = "*"
+# yapf is used for formatting the code
+yapf = "*"
+autopep8 = "*"
+# flake8 is used for linting
+flake8 = "*"
+# isort is used for sort imports
+# Usage: isort *.py
+isort = "*"
+pipenv = "*"
+twine = "*"
+
+[packages]
+gitpython = "*"
+
+[requires]
+python_version = "3.6"
