@@ -12,7 +12,7 @@ Options:
 
 import os
 import re
-import docopt
+import click
 
 from git import Repo
 
@@ -56,6 +56,7 @@ def increase_version(v, inc):
 def get_commit_increments(repo, latest_rev='HEAD'):
     t = (0, 0, 0)
     for commit in repo.iter_commits(latest_rev):
+        # print(commit.name_rev)
         inc = get_commit_increment(commit.message)
         if inc:
             t = increase_version(t, inc)
@@ -66,9 +67,13 @@ def parse_version(t: tuple) -> str:
     return '%d.%d.%d' % t
 
 
-def main():
-    args = docopt.docopt(__doc__, version=__version__)
-    repo = Repo(os.path.abspath(args['--repo']))
+@click.command()
+@click.version_option(__version__)
+@click.option('-r', '--repo', default='./',
+              help="Path to the repository's root directory")
+def main(repo):
+    '''Python tool to calculate SemVer based on conventional git commit messages.'''
+    repo = Repo(os.path.abspath(repo))
 
     incs = get_commit_increments(repo)
     print(parse_version(incs))
