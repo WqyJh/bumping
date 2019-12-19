@@ -1,5 +1,8 @@
 # Bumping
 
+[![Build Status](https://travis-ci.org/WqyJh/bumping.svg?branch=master)](https://travis-ci.org/WqyJh/bumping)
+[![license](https://img.shields.io/badge/LICENCE-MIT-brightgreen.svg)](https://raw.githubusercontent.com/WqyJh/bumping/master/LICENSE)
+
 Python tool to calculate SemVer based on conventional git commit messages.
 
 ## Prerequisite
