@@ -44,10 +44,13 @@ def get_commit_increment(message: str) -> tuple:
     return get_increment(type)
 
 
-def add_version_tuple(v1, v2):
-    return (v1[0] + v2[0],
-            v1[1] + v2[1],
-            v1[2] + v2[2])
+def increase_version(v, inc):
+    if inc[0]:
+        return (v[0] + inc[0], 0, 0)
+    elif inc[1]:
+        return (v[0], v[1] + inc[1], 0)
+    else:
+        return (v[0], v[1], v[2] + inc[2])
 
 
 def get_commit_increments(repo, latest_rev='HEAD'):
@@ -55,7 +58,7 @@ def get_commit_increments(repo, latest_rev='HEAD'):
     for commit in repo.iter_commits(latest_rev):
         inc = get_commit_increment(commit.message)
         if inc:
-            t = add_version_tuple(t, inc)
+            t = increase_version(t, inc)
     return t
 
 

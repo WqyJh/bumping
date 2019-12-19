@@ -32,6 +32,16 @@ class TestBumping(unittest.TestCase):
         for message, expected in asserts:
             self.assertEqual(expected, bumping.get_commit_increment(message))
 
+    def test_increase_version(self):
+        asserts = (
+            (((0, 0, 1), (1, 0, 0)), (1, 0, 0)),  # BREAKING CHANGES
+            (((0, 0, 1), (0, 1, 0)), (0, 1, 0)),  # features
+            (((0, 0, 1), (0, 0, 1)), (0, 0, 2)),  # patches
+        )
+
+        for (v, inc), expected in asserts:
+            self.assertTupleEqual(expected, bumping.increase_version(v, inc))
+
 
 if __name__ == '__main__':
     unittest.main()
