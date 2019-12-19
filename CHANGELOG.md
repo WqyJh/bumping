@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 0.5.0
+## 0.5.1
 #### New Features
 
 * add commit range options
@@ -9,6 +9,7 @@
 
 #### Fixes
 
+* add regex to parse_version
 * fix version calculating
 
 ## 0.3.0
