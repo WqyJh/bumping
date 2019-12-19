@@ -64,17 +64,22 @@ def get_commit_increments(repo, base='', base_version=None, end='HEAD'):
     return t
 
 
+_VERSION_PATTERN = '(\d+).(\d+).(\d+)'
+
+
 def parse_version(v):
     '''Parse version string to version tuple.
 
-    :param v: version string like '0.0.1'
+    :param v: version string like '0.0.1' or 'v0.1.1'
     :returns a tuple contains three parts of the version like (0, 0, 1)
     '''
-    try:
-        if v:
-            return tuple(map(int, v.split('.')))
-    except Exception:
-        pass
+    if v:
+        try:
+            m = re.search(_VERSION_PATTERN, v)
+            if m:
+                return tuple(map(int, m.groups()))
+        except Exception:
+            pass
 
     raise Exception(f'Invalid version string: {v}')
 
