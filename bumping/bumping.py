@@ -1,15 +1,3 @@
-'''
-Python tool to calculate SemVer based on conventional git commit messages.
-
-Usage: bumping [options]
-
-Options:
-    -r=REPO --repo=REPO     Path to the repository's root directory
-                            [Default: .]
-    -h --help               Print this help text
-    -v --version            Print the version number
-'''
-
 import os
 import re
 import click
